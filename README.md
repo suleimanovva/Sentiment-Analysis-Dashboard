@@ -1,25 +1,28 @@
 # Sentiment Analysis Dashboard
 
 ## System Design
-This project provides an end-to-end NLP pipeline that classifies Amazon Alexa reviews as Positive or Negative. The system uses a machine learning model, stores results in an SQLite database, and provides a dashboard for visualization.
+This project is an end-to-end NLP system built to classify Amazon Alexa reviews. The pipeline includes text preprocessing, feature extraction using TF-IDF, and machine learning classification. All predictions are logged into an SQLite database for trend analysis.
 
-## Dataset
-Amazon Alexa Reviews dataset (Kaggle). Contains text reviews and binary sentiment labels.
+## Dataset Description
+The system utilizes the **Amazon Alexa Reviews** dataset (Kaggle), consisting of customer reviews and binary sentiment labels.
 
-## NLP Pipeline & Model Selection
-- **Preprocessing:** Regex cleaning, lowercase conversion, NLTK stopword removal, Tokenization.
+## Model Selection & Training Process
+We implemented and compared three models: **Logistic Regression**, **Naive Bayes**, and **Support Vector Machine (SVM)**. 
+- **Preprocessing:** Text cleaning, lowercase conversion, NLTK stopword removal, and tokenization.
 - **Feature Extraction:** TF-IDF Vectorizer.
-- **Models:** Compared Logistic Regression, Naive Bayes, and SVM. Logistic Regression was selected as the best model based on F1-score performance.
+- **Optimization:** Used `class_weight='balanced'` to handle class imbalance, significantly improving F1-score for negative reviews.
 
-## Training Process
-The models were trained on 80% of the data, evaluated with Accuracy, Precision, Recall, and F1-Score metrics.
+## Evaluation Results (Logistic Regression)
+| Metric | Class 0 (Negative) | Class 1 (Positive) |
+| :--- | :--- | :--- |
+| Precision | 0.52 | 0.97 |
+| Recall | 0.78 | 0.92 |
+| F1-Score | 0.62 | 0.95 |
 
-## Installation
-1. Install requirements: `pip install -r requirements.txt`
-2. Run training: `python3 src/train.py`
-3. Run dashboard: `streamlit run app.py`
+## Installation Instructions
+1. Install dependencies: `pip install -r requirements.txt`
+2. Train models: `python3 src/train.py`
+3. Run the dashboard: `streamlit run app.py`
 
-## Features
-- Interactive sentiment prediction.
-- Real-time SQL logging of predictions.
-- Sentiment distribution visualization.
+## Dashboard Screenshots
+![Streamlit-Dashboard](image.png)
