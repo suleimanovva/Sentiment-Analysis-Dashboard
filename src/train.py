@@ -1,13 +1,17 @@
 import pandas as pd
 import joblib
+import os
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import SVC
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report
 
 def train_models():
+    if not os.path.exists('models'):
+        os.makedirs('models')
+        
     df = pd.read_csv('data/amazon_alexa.tsv', sep='\t')
     df = df.dropna()
     
@@ -21,9 +25,9 @@ def train_models():
     X_test_vec = vectorizer.transform(X_test)
     
     models = {
-        "Logistic Regression": LogisticRegression(),
+        "Logistic Regression": LogisticRegression(class_weight='balanced'),
         "Naive Bayes": MultinomialNB(),
-        "SVM": SVC()
+        "SVM": SVC(class_weight='balanced', probability=True)
     }
     
     for name, model in models.items():
